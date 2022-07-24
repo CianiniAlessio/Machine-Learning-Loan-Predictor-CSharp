@@ -30,3 +30,19 @@ Defining the Hessian matrix H after some calculation which are easy to find on t
 Then the N-R algorithm can be written as : $$\theta_{m+1} = \theta_m-H^{-1}(\theta_m,\hat(y))\nabla_\theta l(\theta_m;\hat{x},\hat{y})$$
 After some step the goal is to minimize the M-norm, this means: $$\min_{\theta_{m+1}}=||Y\theta_{k+1} - z_k||^2_{M(\theta_k,\hat{y})}$$ with $$z_m = Y\theta_m -M(\theta_m,\hat{y})^{-1}(x-\hat{p}(\theta_k,y)$$
 
+
+After this I pass to the logit model the inputs and the output created before in order to creates some weight to predict a correct label for each testInput, I convert the solution from bool to binary, and then I print the weights.
+```
+ var logit = learner.Learn(traingInputs, traingOutputs);
+
+            // Predict output with true = 1, and false = 0
+
+            bool[] predictions = logit.Decide(testInputs);
+            int l = 0;
+            
+            Console.Write("The weights of my Model are: ");
+            foreach (var k in logit.Weights)
+            {
+                Console.Write($"{Math.Round(k, 5)}, ");
+            }
+```
