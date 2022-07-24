@@ -4,8 +4,12 @@ loan or not may take some time to be gathered.
 Therefore In this project my main goal is to predict if the amount of loan that a person asked based on
 different variable is going to be given.
 These variables are: 
-##### **ApplicantIncome,CoapplicantIncome,LoanAmount,Credit_History** .
-I downloaded from Kaggle a dataset in which there is a train dataset in which is shown if the user is eligible
-for the loan or not.
-The other set is the test dataset that I will use to evaluate my created model.
+**ApplicantIncome,CoapplicantIncome,LoanAmount,Credit_History** .
+
+I downloaded from Kaggle a dataset in which there are different features for each person, I used just some of these features.
+
+Every person has in the last column the 'loan Status' which can be either Y or N, labeled as "1" and "0" from me.
+
+Since it's a problem in which you have a Binary outcome(label) and different features I decided to create a **Logistic Regression Model** to train.
+When we talk about the **Iterative Reweighted Least Squares** method the aim is to find a *maximum estimator* for the generalized model.
 
