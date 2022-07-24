@@ -22,7 +22,7 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             Console.WriteLine("\n===========> PROJECT ALESSIO CIANINI <===========\n");
             Console.WriteLine("\n===========> Creating a model and training it <===========\n");
             string currentDirectory = Directory.GetCurrentDirectory().ToString();
-            string basePath = currentDirectory.Substring(0, currentDirectory.IndexOf("bin") - 1);
+            string basePath = currentDirectory.Substring(0, currentDirectory.IndexOf("bin") - 1)+"\\folderCSV";
             string pathDati = basePath + "\\datiC#.csv";
             string pathCorrette = basePath + "\\UsefullData.csv";
             string pathTraining = basePath + "\\Training.csv";// @System.Configuration.ConfigurationManager.AppSettings["pathToTraining"];

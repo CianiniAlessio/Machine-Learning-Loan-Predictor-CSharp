@@ -11,7 +11,7 @@ namespace Machine_Learning_Loan_Predictor_CSharp
         public utils() { }
         private enum COLUMN_FEATURES : int { ApplicantIncome = 6, CoapplicantIncome = 7, LoanAmount = 8, Credit_History = 10, Loan_Status = 12};
         private string basePath = Directory.GetCurrentDirectory().ToString().Substring(0,
-            Directory.GetCurrentDirectory().ToString().IndexOf("bin") - 1);
+            Directory.GetCurrentDirectory().ToString().IndexOf("bin") - 1)+"\\folderCSV";
         public static void CheckAndRemoveAnomalies(ref string[,] matriceDati)
         {
             int row = matriceDati.GetLength(0);
