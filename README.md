@@ -17,5 +17,8 @@ var learner = new IterativeReweightedLeastSquares<LogisticRegression>()
                 MaxIterations = 100
             };
 ```
-When we talk about the **Iterative Reweighted Least Squares** method the aim is to find a *maximum estimator* for the generalized model. A **Logistic Regression Model** in regression analysis is estimating the parameters of a logistic model, therefore its coefficient in the linear combination.
+The regression coefficient are estimated using the maximum likelihood estimation. Is not possible to find the coefficient without iterating through our model, therefore some process is needed.
+The iterative Reweighted Least Squares is used for example for binary problem like the one that we are going to analyze.
+This method is equivalent to find the maximum log-likelihood function for a Bernoulli (0,1) distributed process using Newton-Rapson method.
+$x = 10$
 
