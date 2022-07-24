@@ -10,16 +10,14 @@ namespace Machine_Learning_Loan_Predictor_CSharp
     {
         public utils() { }
 
-        public static string basePath = Directory.GetCurrentDirectory().ToString().Substring(0,
-            Directory.GetCurrentDirectory().ToString().IndexOf("bin") - 1);
+        public static string basePath = Directory.GetCurrentDirectory().ToString().Substring(0, Directory.GetCurrentDirectory().ToString().IndexOf("bin") - 1);
         private static string pathFinalData = basePath + "\\FinalData";
         private static string pathTrainAndTest = basePath + "\\FinalData";
         public static string pathDati = basePath + "\\datiC#.csv";
-        public static string pathCorrette = pathFinalData + "\\UsefullData.csv";
+        public static string pathCorrette = pathFinalData + "\\CleanedData.csv";
         public static string pathTraining = pathTrainAndTest + "\\Training.csv";
         public static string pathTest = pathTrainAndTest + "\\Test.csv"; 
-        private enum COLUMN_FEATURES : int { ApplicantIncome = 6, CoapplicantIncome = 7, LoanAmount = 8, Credit_History = 10, Loan_Status = 12};
-        
+        private enum COLUMN_FEATURES : int { ApplicantIncome = 6, CoapplicantIncome = 7, LoanAmount = 8, Credit_History = 10, Loan_Status = 12};        
         public static void CheckAndRemoveAnomalies(ref string[,] matriceDati)
         {
             int row = matriceDati.GetLength(0);
