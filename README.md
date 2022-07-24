@@ -12,16 +12,10 @@ Every person has in the last column the 'loan Status' which can be either Y or N
 
 Since it's a problem in which you have a Binary outcome(label) and different features I decided to create a **Logistic Regression Model** or **Logit model** to train.
 ```
-function test() {
-  console.log("notice the blank line before this function?");
-}
-```
-
-''' 
 var learner = new IterativeReweightedLeastSquares<LogisticRegression>()
             {
                 MaxIterations = 100
             };
-'''
+```
 When we talk about the **Iterative Reweighted Least Squares** method the aim is to find a *maximum estimator* for the generalized model. A **Logistic Regression Model** in regression analysis is estimating the parameters of a logistic model, therefore its coefficient in the linear combination.
 
