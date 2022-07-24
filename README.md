@@ -18,6 +18,7 @@ var learner = new IterativeReweightedLeastSquares<LogisticRegression>()
             };
 ```
 The regression coefficient are estimated using the maximum likelihood estimation. Is not possible to find the coefficient without iterating through our model, therefore some process is needed.
+Defining $p =\sigma(\theta^T\hat{y}(t))$
 The log-likelihood function is the following:
 $$l(\theta;x,y) = \sum_{t=1}^N{x(t)\theta^Ty(t) - log(1+e^{\theta^Ty(t)})}$$ which is, unfoprtunately, a non-linear function of the parameter $\theta$ which can only be maximized by numerical methods. To maximize the log-likelihood we are going to the it's gradient equals to 0, i.e:
 $$\nabla_\theta l(\theta;x,y)=\sum_{t=1}^Ny(t){x(t)-p_1(\theta;y(t))} = 0$$ which is a not solvable system since the number of unknown parameters are superior to the eqations.
