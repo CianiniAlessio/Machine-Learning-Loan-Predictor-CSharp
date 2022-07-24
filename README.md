@@ -28,5 +28,5 @@ N-R method:
 $$x_1 = x_0 -\frac{f_{x_0}}{f^1_{x_0}}$$
 Defining the Hessian matrix H after some calculation which are easy to find on the internet we obtain that $$H(\theta,\hat{y}) = Y^TM(\theta,\hat{y})Y$$ where $$M(\theta,\hat{y}) := diag{\sigma(\theta^T\hat{y(1))(1-\sigma(\theta^T\hat{y}(1))})}),...,\sigma(\theta^T\hat{y}(N))(1-\sigma(\theta^T\hat{y}(N))$$.
 Then the N-R algorithm can be written as : $$\theta_{m+1} = \theta_m-H^{-1}(\theta_m,\hat(y))\nabla_\theta l(\theta_m;\hat{x},\hat{y})$$
-After some step the goal is to minimize the M-norm, this means: $$\min_{\theta_{m+1}}=||Y\theta_{k+1} - z_k||^2_{M(\theta_k},\hat{y}$$
+After some step the goal is to minimize the M-norm, this means: $$\min_{\theta_{m+1}}=||Y\theta_{k+1} - z_k||^2_{M(\theta_k,\hat{y}$$
 
