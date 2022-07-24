@@ -18,7 +18,7 @@ var learner = new IterativeReweightedLeastSquares<LogisticRegression>()
             };
 ```
 The regression coefficient are estimated using the maximum likelihood estimation. Is not possible to find the coefficient without iterating through our model, therefore some process is needed.
-Defining the Bernoulli probability density function $pdf = q =\sigma(\theta^T\hat{y}(n))$ and our sample of 'people' as $y(n) = y(1)...y(n)$
+Defining the Bernoulli probability density function $pdf = q =\sigma(\theta^T\hat{y}(n))$ and our sample of 'people' as $y(n) = y(1)...y(N)$
 The log-likelihood function is the following:
 $$l(\theta;x,y) = \sum_{n=1}^N{x(n)\theta^Ty(n) - log(1+e^{\theta^Ty(n)})}$$ which is, unfortunately, a non-linear function of the parameter $\theta$ which can only be maximized by numerical methods. To maximize the log-likelihood we are going to impose that it's gradient is equals to 0, i.e:
 $$\nabla_\theta l(\theta;x,y)=\sum_{n=1}^Ny(n){x(n)-q(\theta;y(n))} = 0$$ which is a not solvable system since the number of unknown parameters are superior to the eqations.
