@@ -17,9 +17,17 @@ namespace Machine_Learning_Loan_Predictor_CSharp
         public static string pathCorrette = pathFinalData + "\\CleanedData.csv";
         public static string pathTraining = pathTrainAndTest + "\\Training.csv";
         public static string pathTest = pathTrainAndTest + "\\Test.csv"; 
-        private enum COLUMN_FEATURES : int { ApplicantIncome = 6, CoapplicantIncome = 7, LoanAmount = 8, Credit_History = 10, Loan_Status = 12};        
+        //my enum used for the choice of the column
+        private enum COLUMN_FEATURES : int { ApplicantIncome = 6, CoapplicantIncome = 7, LoanAmount = 8, Credit_History = 10, Loan_Status = 12}; 
+        
+
+        /// <summary>
+        /// Pass by ref a string[,] matrix in order to remove the anomalies 
+        /// </summary>
+        /// <param name="matriceDati"></param>
         public static void CheckAndRemoveAnomalies(ref string[,] matriceDati)
         {
+            // Here I check the error in the matrix and create a list with position of the error. I didn't create an array since it changes in lenght.
             int row = matriceDati.GetLength(0);
             int column = matriceDati.GetLength(1);
             List<int> errori = new List<int>();
@@ -40,21 +48,29 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                 }
 
             }
+            // here I call the method to remove the founded anomalies
             RemoveAnomalies(ref matriceDati, errori);
 
         }
+
+
+        // remove anomalies
         private static void RemoveAnomalies(ref string[,] matriceDati, List<int> errori)
         {
             int row = matriceDati.GetLength(0);
             int column = matriceDati.GetLength(1);
             int numberOfCurrentErrors = 0;
+            // basically I create another array that has the lenght that is the lenght of the matrix not cleaned minus the number of the error
             string[,] newArray = new string[matriceDati.GetLength(0) - errori.Count, matriceDati.GetLength(1)];
             int[] PosErrori = errori.ToArray();
+
+            bool checkPos;
             for (int k = 0; k < row; k++)
             {
-                bool checkPos = false;
+                checkPos = false;
                 for (int j = 0; j < column; j++)
                 {
+                    // i check if the row is the same for one of the error
                     for (int z = 0; z < errori.Count; z++)
                     {
                         if (PosErrori[z] == k)
@@ -62,8 +78,12 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                             checkPos = true;
                         }
                     }
+                    // if the check is false then I'm going to fill the array 
                     if (!checkPos)
                     {
+                        // the row that I'm going to fill is going to be the row in which I'm at minus the number of error counted.
+                        // Basically I need to scale the position of the array with the errors minus
+                        // the number of error encountered in order to not have empty spaces in the cleaned array.
                         newArray[k - numberOfCurrentErrors, j] = matriceDati[k, j];
                     }
                 }
@@ -74,13 +94,17 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             }
             matriceDati = newArray;
         }
+
+
+        /// <summary>
+        /// Read the data from the csv and create a matrix which I'm going to check for malformed data ex: null char, negative salary ecc
+        /// </summary>
         public static string[,] LoadData(string pathToRead)
         {
-
             int i = 0;
-            int colonne = 0;
+            int column = 0;
             string[,] mioArray;
-            // with this first cycle i get the number of column and the number of row for the file.
+            // with this first cycle i get the number of column and the number of row for the new matrix that i'm going to create.
             try
             {
                 using (var reader = new System.IO.StreamReader(pathToRead))
@@ -89,7 +113,7 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                     {
                         var line = reader.ReadLine();
                         var values = line.Split(',');
-                        colonne = values.Length;
+                        column = values.Length;
                         i++;
                     }
                 }
@@ -98,21 +122,21 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             {
                 Console.WriteLine(ex.Message);
             }
-            // with this one i just fill the matrix with all the data 
 
+            // with this cycle i just fill the matrix with all the data 
             try
             {
                 using (var reader = new System.IO.StreamReader(pathToRead))
                 {
                     int l = 0;
-                    mioArray = new string[i, colonne];
+                    mioArray = new string[i, column];
                     while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
                         var values = line.Split(',');
                         if (l != 0)
                         {
-                            for (int h = 0; h < colonne; h++)
+                            for (int h = 0; h < column; h++)
                             {
                                 mioArray[l - 1, h] = values[h];
 
@@ -130,10 +154,83 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             {
                 Console.WriteLine(ex.Message);
             }
-
+            //if some problems
             return null;
 
-        }       
+        }
+
+
+        /// <summary>
+        /// // Convert the data read as string from the csv in double and prepare them for the Model 
+        /// </summary>
+        /// <param name="pathToRead"> Pass the path of the Cleaned matrix</param>
+        /// <returns></returns>
+        public static double[,] LoadDataAndConvertToDouble(string pathToRead)
+        {
+            int row = 0;
+            int column = 0;
+            double[,] mioArray = new double[,] { };
+            // with this first cycle i get the number of column and the number of row for the file.
+            try
+            {
+                using (var reader = new System.IO.StreamReader(pathToRead))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var values = line.Split(',');
+                        column = values.Length;
+                        row++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            // with this cycle I fill the matrix with all the data 
+            try
+            {
+                using (var reader = new System.IO.StreamReader(pathToRead))
+                {
+                    int i = 0;
+                    mioArray = new double[row, 5];
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var values = line.Split(',');
+                        int c = 0;
+                        // here i pass the data in the matrix and i convert the last column with Y = 1 and N = 0 needed for the ML model
+                        foreach (var x in values)
+                        {
+                            if (i <= row && i != 0)
+                            {
+                                if (c == values.Length - 1)
+                                    mioArray[i - 1, c++] = (x.Equals("N") ? 0 : 1);
+                                else
+                                    mioArray[i - 1, c++] = Convert.ToDouble(x);
+                            }
+
+                        }
+                        i++;
+
+                    }
+                    return mioArray;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            //if some problems
+            return null;
+
+        }
+
+
+        // here looking at my data for this project I decided to use only the column with the features: ApplicantIncome,CoapplicantIncome,LoanAmount,Credit_History 
+        // and of course I keep the record of the result :LoanStatus which I'll use to train and test
         public static string[,] RemoveUselessColumn(string[,] matriceDati)
         {
             string[,] returnMatrix = new string[matriceDati.GetLength(0), 5];
@@ -146,6 +243,7 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                 {
                     for (int j = 0; j < matriceDati.GetLength(1); j++)
                     {
+                        // here I checked that the column that I'm looking at is the one of the column of interest decided in the enum at the beginning
                         if(j == (int)COLUMN_FEATURES.ApplicantIncome || j == (int)COLUMN_FEATURES.CoapplicantIncome ||
                            j == (int)COLUMN_FEATURES.LoanAmount|| j == (int)COLUMN_FEATURES.Credit_History ||
                            j == (int)COLUMN_FEATURES.Loan_Status)
@@ -170,6 +268,10 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             return returnMatrix;
 
         }
+
+
+
+        // here i split the matrix in test and training with a seed of 0.8 and is constant and then I save in a csv the train and the test results
         public void SplitTrainingTest(string[,] matriceDati)
         {
             Random r = new Random();
@@ -201,6 +303,11 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             SaveToCsv(pathTraining, Training);
             
         }
+
+
+        /// <summary>
+        /// This is the save file function for the test and training output
+        /// </summary>
         public void SaveToCsv(string pathToWrite, string[,] matriceDati)
         {
             try
@@ -229,69 +336,9 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                 Console.WriteLine(e.Message);
             }
         }
-        public static double[,] LoadDataAndConvertToDouble(string pathToRead)
-        {
 
-            int row = 0;
-            int colonne = 0;
-            double[,] mioArray = new double[,] { };
-            // with this first cycle i get the number of column and the number of row for the file.
-            try
-            {
-                using (var reader = new System.IO.StreamReader(pathToRead))
-                {
-                    while (!reader.EndOfStream)
-                    {
-                        var line = reader.ReadLine();
-                        var values = line.Split(',');
-                        colonne = values.Length;
-                        row++;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            // with this one i just fill the matrix with all the data 
 
-            try
-            {
-                using (var reader = new System.IO.StreamReader(pathToRead))
-                {
-                    int i = 0;
-                    mioArray = new double[row, 5];
-                    while (!reader.EndOfStream)
-                    {
-                        var line = reader.ReadLine();
-                        var values = line.Split(',');
-                        int c = 0;
-
-                        foreach (var x in values)
-                        {
-                            if (i <= row && i != 0)
-                            {
-                                if (c == values.Length - 1)
-                                    mioArray[i - 1, c++] = (x.Equals("N") ? 0 : 1);    
-                                else
-                                    mioArray[i - 1, c++] =  Convert.ToDouble(x);
-                            }
-
-                        }
-                        i++;
-
-                    }
-                    return mioArray;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return mioArray;
-
-        }
+        // here is a function that will be used to prepared the input and the output for the model that I chose 
         public void SeparateInputsAndOutputs(ref double[][] Inputs, ref double[] Outputs, double[,] matrix)
         {
             Inputs = new double[matrix.GetLength(0)][];

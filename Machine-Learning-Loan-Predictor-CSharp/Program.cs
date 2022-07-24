@@ -21,8 +21,8 @@ namespace Machine_Learning_Loan_Predictor_CSharp
 
             Console.WriteLine("\n===========> PROJECT ALESSIO CIANINI <===========\n");
             Console.WriteLine("\n===========> Creating a model and training it <===========\n");
-            
             utils u = new utils();
+
             string[,] matriceDati = LoadData(pathDati);
             matriceDati = RemoveUselessColumn(matriceDati);
 
