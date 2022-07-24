@@ -46,3 +46,19 @@ After this I pass to the logit model the inputs and the output created before in
                 Console.Write($"{Math.Round(k, 5)}, ");
             }
 ```
+With this part of code I output the results:
+```
+            Console.WriteLine($"\nThe regression used is : {logit.Linear}");
+            Console.WriteLine($"\nThe standard error encountered is : {logit.StandardErrors.Mean()}");
+
+            foreach (var k in testOutputs)
+            {
+                if (k == predictions[i].ToZeroOne())
+                {
+                    correctNumber++;
+                }
+                i++;
+            }
+
+            Console.WriteLine($"\nThe accuracy of my model is = {correctNumber * 100 / testOutputs.Length}%");
+```
