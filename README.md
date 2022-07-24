@@ -20,7 +20,7 @@ var learner = new IterativeReweightedLeastSquares<LogisticRegression>()
 The regression coefficient are estimated using the maximum likelihood estimation. Is not possible to find the coefficient without iterating through our model, therefore some process is needed.
 The log-likelihood function is the following:
 $$l(\theta;x,y) = \sum_{t=1}^N{x(t)\theta^Ty(t) - log(1+e^{\theta^Ty(t)})}$$ which is, unfoprtunately, a non-linear function of the parameter $\theta$ which can only be maximized by numerical methods. To maximize the log-likelihood we are going to the it's gradient equals to 0, i.e:
-$$\Nabla_\theta l(\theta;x,y)=\sum_{t=1}^Ny(t){x(t)-p_1(\theta;y(t))}} = 0$$
+$$\Nabla_\theta l(\theta;x,y)=\sum_{t=1}^Ny(t){x(t)-p_1(\theta;y(t))} = 0$$
 The iterative Reweighted Least Squares is used for example for binary problem like the one that we are going to analyze.
 This method is equivalent to find the maximum log-likelihood function for a Bernoulli (0,1) distributed process using Newton-Rapson method.
 N-R method:
