@@ -9,9 +9,17 @@ namespace Machine_Learning_Loan_Predictor_CSharp
     class utils
     {
         public utils() { }
+
+        public static string basePath = Directory.GetCurrentDirectory().ToString().Substring(0,
+            Directory.GetCurrentDirectory().ToString().IndexOf("bin") - 1);
+        private static string pathFinalData = basePath + "\\FinalData";
+        private static string pathTrainAndTest = basePath + "\\FinalData";
+        public static string pathDati = basePath + "\\datiC#.csv";
+        public static string pathCorrette = pathFinalData + "\\UsefullData.csv";
+        public static string pathTraining = pathTrainAndTest + "\\Training.csv";
+        public static string pathTest = pathTrainAndTest + "\\Test.csv"; 
         private enum COLUMN_FEATURES : int { ApplicantIncome = 6, CoapplicantIncome = 7, LoanAmount = 8, Credit_History = 10, Loan_Status = 12};
-        private string basePath = Directory.GetCurrentDirectory().ToString().Substring(0,
-            Directory.GetCurrentDirectory().ToString().IndexOf("bin") - 1)+"\\folderCSV";
+        
         public static void CheckAndRemoveAnomalies(ref string[,] matriceDati)
         {
             int row = matriceDati.GetLength(0);
@@ -128,10 +136,10 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             return null;
 
         }       
-        public static string[,] RemoveUselessColumn(string[,] matriceDati, string pathToWrite)
+        public static string[,] RemoveUselessColumn(string[,] matriceDati)
         {
             string[,] returnMatrix = new string[matriceDati.GetLength(0), 5];
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(pathToWrite))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(pathCorrette))
             {
                 file.WriteLine("ApplicantIncome,CoapplicantIncome,LoanAmount,Credit_History,Loan_Status");
                 string toWrite = "";
@@ -191,8 +199,8 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                     }
                 }
             }
-            SaveToCsv(basePath + "\\Test.csv", Test);
-            SaveToCsv(basePath + "\\Training.csv", Training);
+            SaveToCsv(pathTest, Test);
+            SaveToCsv(pathTraining, Training);
             
         }
         public void SaveToCsv(string pathToWrite, string[,] matriceDati)

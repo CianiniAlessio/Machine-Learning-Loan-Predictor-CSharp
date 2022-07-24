@@ -13,7 +13,7 @@ using Accord.Statistics.Models.Regression.Fitting;
 
 namespace Machine_Learning_Loan_Predictor_CSharp
 {
-    class Program
+    class Program : utils
     {
         static void Main(string[] args)
         {
@@ -21,23 +21,18 @@ namespace Machine_Learning_Loan_Predictor_CSharp
 
             Console.WriteLine("\n===========> PROJECT ALESSIO CIANINI <===========\n");
             Console.WriteLine("\n===========> Creating a model and training it <===========\n");
-            string currentDirectory = Directory.GetCurrentDirectory().ToString();
-            string basePath = currentDirectory.Substring(0, currentDirectory.IndexOf("bin") - 1)+"\\folderCSV";
-            string pathDati = basePath + "\\datiC#.csv";
-            string pathCorrette = basePath + "\\UsefullData.csv";
-            string pathTraining = basePath + "\\Training.csv";// @System.Configuration.ConfigurationManager.AppSettings["pathToTraining"];
-            string pathTest = basePath + "\\Test.csv"; //@System.Configuration.ConfigurationManager.AppSettings["pathToTest"];
+            
             utils u = new utils();
-            string[,] matriceDati = utils.LoadData(pathDati);
-            matriceDati = utils.RemoveUselessColumn(matriceDati, pathCorrette);
+            string[,] matriceDati = LoadData(pathDati);
+            matriceDati = RemoveUselessColumn(matriceDati);
 
             //clean 
             utils.CheckAndRemoveAnomalies(ref matriceDati);
             //splitto
             u.SplitTrainingTest(matriceDati);
 
-            double[,] miaMatriceTest = utils.LoadDataAndConvertToDouble(pathTest);
-            double[,] miaMatriceTrain = utils.LoadDataAndConvertToDouble(pathTraining);
+            double[,] miaMatriceTest = LoadDataAndConvertToDouble(pathTest);
+            double[,] miaMatriceTrain = LoadDataAndConvertToDouble(pathTraining);
             double[][] traingInputs = new double[miaMatriceTrain.GetLength(0)][];
             double[] traingOutputs = new double[miaMatriceTrain.GetLength(0)];
             double[][] testInputs = new double[miaMatriceTest.GetLength(0)][];
