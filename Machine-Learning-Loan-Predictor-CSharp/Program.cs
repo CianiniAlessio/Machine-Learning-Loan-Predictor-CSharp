@@ -23,28 +23,37 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             Console.WriteLine("\n===========> Creating a model and training it <===========\n");
             utils u = new utils();
 
+            // I LOAD THE DATA FROM THE PATH SET IN THE UTILS.CS
+
             string[,] matriceDati = LoadData(pathDati);
+            
+            //I DECIDE WHICH COLUMN I'M GOING TO USE SINCE NOT ALL THE FEATURES I BELIEVE ARE USEFULL
             matriceDati = RemoveUselessColumn(matriceDati);
 
-            //clean 
+            // CHECKING AND CLEANING OF THE MATRIX 
             utils.CheckAndRemoveAnomalies(ref matriceDati);
-            //splitto
+            
+            // SPLIT IN TRAINING AND TEST MATRIX, ALSO WRITE TO TEST.CSV AND TRAINING.CSV THE MATRIX CREATED
             u.SplitTrainingTest(matriceDati);
 
+            //ONCE I CREATED THE MATRIX I'M GOING GOING TO PREPARE THE DATA FOR THE MODEL, WHICH REQUIRES TO CONVERT THE 
+            //STRING MATRIX IN A DOUBLE MATRIX
             double[,] miaMatriceTest = LoadDataAndConvertToDouble(pathTest);
             double[,] miaMatriceTrain = LoadDataAndConvertToDouble(pathTraining);
-
+            
+            //INITIALIZATION OF THE VARAIBLES NEEDED
             double[][] traingInputs = new double[miaMatriceTrain.GetLength(0)][];
             double[] traingOutputs = new double[miaMatriceTrain.GetLength(0)];
             double[][] testInputs = new double[miaMatriceTest.GetLength(0)][];
             double[] testOutputs = new double[miaMatriceTest.GetLength(0)];
 
 
+            // I SEPARATE WITH A 80-20 TRAINING-TEST %
             u.SeparateInputsAndOutputs(ref traingInputs, ref traingOutputs, miaMatriceTrain);
             u.SeparateInputsAndOutputs(ref testInputs, ref testOutputs, miaMatriceTest);
 
 
-
+            
             // Train a Logistic Regression model
             var learner = new IterativeReweightedLeastSquares<LogisticRegression>()
             {
