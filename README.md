@@ -20,5 +20,6 @@ var learner = new IterativeReweightedLeastSquares<LogisticRegression>()
 The regression coefficient are estimated using the maximum likelihood estimation. Is not possible to find the coefficient without iterating through our model, therefore some process is needed.
 The iterative Reweighted Least Squares is used for example for binary problem like the one that we are going to analyze.
 This method is equivalent to find the maximum log-likelihood function for a Bernoulli (0,1) distributed process using Newton-Rapson method.
-$x = 10$
+N-R method:
+$$x_1 = x_o -\frac{f_{x_0}}{f'_{xo}}$$
 
