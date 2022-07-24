@@ -33,6 +33,7 @@ namespace Machine_Learning_Loan_Predictor_CSharp
 
             double[,] miaMatriceTest = LoadDataAndConvertToDouble(pathTest);
             double[,] miaMatriceTrain = LoadDataAndConvertToDouble(pathTraining);
+
             double[][] traingInputs = new double[miaMatriceTrain.GetLength(0)][];
             double[] traingOutputs = new double[miaMatriceTrain.GetLength(0)];
             double[][] testInputs = new double[miaMatriceTest.GetLength(0)][];
