@@ -18,10 +18,10 @@ var learner = new IterativeReweightedLeastSquares<LogisticRegression>()
             };
 ```
 The regression coefficient are estimated using the maximum likelihood estimation. Is not possible to find the coefficient without iterating through our model, therefore some process is needed.
-Defining the Bernoulli probability density function $p =\sigma(\theta^T\hat{y}(t))$
+Defining the Bernoulli probability density function $pdf =\sigma(\theta^T\hat{y}(t))$
 The log-likelihood function is the following:
-$$l(\theta;x,y) = \sum_{t=1}^N{x(t)\theta^Ty(t) - log(1+e^{\theta^Ty(t)})}$$ which is, unfortunately, a non-linear function of the parameter $\theta$ which can only be maximized by numerical methods. To maximize the log-likelihood we are going to the it's gradient equals to 0, i.e:
-$$\nabla_\theta l(\theta;x,y)=\sum_{t=1}^Ny(t){x(t)-p_1(\theta;y(t))} = 0$$ which is a not solvable system since the number of unknown parameters are superior to the eqations.
+$$l(\theta;x,y) = \sum_{t=1}^N{x(t)\theta^Ty(t) - log(1+e^{\theta^Ty(t)})}$$ which is, unfortunately, a non-linear function of the parameter $\theta$ which can only be maximized by numerical methods. To maximize the log-likelihood we are going to impose that it's gradient is equals to 0, i.e:
+$$\nabla_\theta l(\theta;x,y)=\sum_{t=1}^Ny(t){x(t)-pdf_1(\theta;y(t))} = 0$$ which is a not solvable system since the number of unknown parameters are superior to the eqations.
 The iterative Reweighted Least Squares is used for example for binary problem like the one that we are going to analyze.
 This method is equivalent to find the maximum log-likelihood function for a Bernoulli (0,1) distributed process using Newton-Rapson method.
 N-R method:
