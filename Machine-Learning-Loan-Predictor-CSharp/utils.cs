@@ -38,7 +38,6 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                 {
                     if (matriceDati[k, j] == null || matriceDati[k, j].Equals(""))
                     {
-                        Console.WriteLine($"Something wrong at line {k} and column {j}");
                         if (lastErrorRow != k)
                         {
                             errori.Add(k);
@@ -274,6 +273,10 @@ namespace Machine_Learning_Loan_Predictor_CSharp
         // here i split the matrix in test and training with a seed of 0.8 and is constant and then I save in a csv the train and the test results
         public void SplitTrainingTest(string[,] matriceDati)
         {
+            List<string[]> temp = FromMatrixToList(matriceDati);
+            //HERE I USED THE SHUFFLE FUNCTION IN ORDER TO CHANGE THE ORDER OF THE ARRAY
+            Shuffle(ref temp);
+            matriceDati = FromListToMatrix(temp);
             Random r = new Random();
             int row = matriceDati.GetLength(0);
             int column = matriceDati.GetLength(1);
@@ -352,6 +355,55 @@ namespace Machine_Learning_Loan_Predictor_CSharp
 
             }
 
+        }
+        // NEEDED FOR THE SHUFFLE
+        private List<string[]> FromMatrixToList(string[,] matrix)
+        {
+            List<string[]> temp = new List<string[]>(); 
+            string[] row = new string[matrix.GetLength(1)];
+            for(int k=0;k<matrix.GetLength(0);k++)
+            {
+                for (int i=0;i<matrix.GetLength(1);i++)
+                {
+                    row[i] = matrix[k, i];
+                }
+              
+                temp.Add(row);
+                row = new string[matrix.GetLength(1)];
+            }
+            return temp;
+        }
+        // NEEDED FOR THE SHUFFLE
+        private string[,] FromListToMatrix(List<string[]> list)
+        {
+            int column = list[0].Length;
+            int row = list.Count;
+            string[,] matrix = new string[row,column];
+            for(int k = 0;k<row;k++)
+            {
+                for(int i = 0;i<column;i++)
+                {
+                    matrix[k, i] = list[k][i];
+                }
+            }
+            return matrix;
+        }
+        // RANDOMIZE A STARTING POINT AND CHANGING THE ORDER OF THE LIST. DOING THIS WHEN I SPLIT TRAINING AND TESTING I'M GOING TO OBTAIN
+        // A DIFFERENT SET OF TEST AND TRAIN FOR EACH CYCLE. TEST RATIO TRAINING/TEST IS ALWAYS THE SAME 4:1 BUT THE ELEMENTS CHANGE
+        private void Shuffle(ref List<string[]> list)
+        {
+            Random random = new Random();
+            List<string[]> temp = new List<string[]>();
+            int StartingPoint = (int)random.NextInt64(1, 100);
+            for(int i = StartingPoint; i < list.Count; i++)
+            {
+                temp.Add(list[i]);
+            }
+            for(int i = 0; i<StartingPoint; i++)
+            {
+                temp.Add(list[i]);
+            }
+            list = temp;
         }
 
     }
