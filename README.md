@@ -13,7 +13,7 @@ I downloaded from Kaggle a dataset in which there are different features for eac
 
 Every person has in the last column the 'loan Status' which can be either Y or N, labeled as "1" and "0" from me; converting this categorical values in a possibility of having either 1 or 0 (binary problem).
 
-## LOGISTIC REGRESSION
+### LOGISTIC REGRESSION
 
 
 
