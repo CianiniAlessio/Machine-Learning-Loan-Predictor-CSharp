@@ -9,7 +9,7 @@ The variables called **features** are:
 **ApplicantIncome,CoapplicantIncome,LoanAmount,Credit_History**  and the final predicted result is called label or class.
 The first one normally are numerical and the second one categorical. Since I'm trying to find a function that describes my data, having categorycal labels would be a problem, therefore I'm going to convert them in numerical labels.
 
-I downloaded from Kaggle a dataset in which there are different features for each person, I used just some of these features, and of course the label in the last column.
+I downloaded from Kaggle a dataset in which there are different features for each person, I used just some of these features, and of course the label in the last column because Logistic regression can be prone to overfitting when there is a high number of predictor variables in the model.
 
 Every person has in the last column the 'loan Status' which can be either Y or N, labeled as "1" and "0" from me; converting this categorical values in a possibility of having either 1 or 0 (binary problem).
 
@@ -17,11 +17,16 @@ Every person has in the last column the 'loan Status' which can be either Y or N
 This type of statistical model, known as logit model, is often used for classification and predictive analytics. Logistic regression estimates the probability of an event occurring.
 
 Since the outcome is a probability, the dependent variable is bounded between 0 and 1. In logistic regression, a logit transformation is applied on the odds—that is, the probability of success divided by the probability of failure. This is also commonly known as the log odds, or the natural logarithm of odds, and this logistic function is represented by the following formulas:
-$Logit(x) = \frac{1}{(1+e^{-x})}$ yielding $ln \left( \frac{x}{1-x} \right )$   = $\beta_0 + \beta_1x_1 +...+\beta_k*x_k$
+$Logit(y) = \frac{1}{(1+e^{-y})}$ and $ln \left( \frac{y}{1-y} \right )$   = $\beta_0 + \beta_1x_1 +...+\beta_k*x_k$
+
+The beta parameter, or coefficient, in this model is commonly estimated via maximum likelihood estimation (MLE). This method tests different values of beta through multiple iterations to optimize for the best fit of log odds. All of these iterations produce the log likelihood function, and logistic regression seeks to maximize this function to find the best parameter estimate.
 
 
 Once the optimal coefficient (or coefficients if there is more than one independent variable) is found, the conditional probabilities for each observation can be calculated, logged, and summed together to yield a predicted probability. For binary classification, a probability less than .5 will predict 0 while a probability greater than 0 will predict 1.
 
+In *Accord* there is a Class called IterativeReweightedLeastSquares class and using its constructor you have to decide if you want to use the Linear Regression or Logistic Regression, that's why I passed the logistic Regression. Also you can decide how many iterations your model has to do before completing the training.
+Through the constructor you can see some properties such as: coefficients, weights, standard Error.
+In the method you have to use first the training in which you have to pass 
 
 Since it's a problem in which you have a Binary outcome(label) and different features I decided to create a **Logistic Regression Model** or **Logit model** to train.
 ```
