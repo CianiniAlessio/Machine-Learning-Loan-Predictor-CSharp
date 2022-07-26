@@ -14,7 +14,10 @@ I downloaded from Kaggle a dataset in which there are different features for eac
 Every person has in the last column the 'loan Status' which can be either Y or N, labeled as "1" and "0" from me; converting this categorical values in a possibility of having either 1 or 0 (binary problem).
 
 ### LOGISTIC REGRESSION
+This type of statistical model, known as logit model, is often used for classification and predictive analytics. Logistic regression estimates the probability of an event occurring.
 
+Since the outcome is a probability, the dependent variable is bounded between 0 and 1. In logistic regression, a logit transformation is applied on the odds—that is, the probability of success divided by the probability of failure. This is also commonly known as the log odds, or the natural logarithm of odds, and this logistic function is represented by the following formulas:
+$Logit(x) = \frac{1}/{(1+\exp^{-x})}$ yielding $ln(\frac{x}{1-x} = \beta_p+\beta_1*x_1+...+ \beta_k*x_k$
 
 
 Once the optimal coefficient (or coefficients if there is more than one independent variable) is found, the conditional probabilities for each observation can be calculated, logged, and summed together to yield a predicted probability. For binary classification, a probability less than .5 will predict 0 while a probability greater than 0 will predict 1.
