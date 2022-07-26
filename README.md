@@ -3,12 +3,21 @@ Nowdays getting a loan is getting more and more difficult and the answer to know
 loan or not may take some time to be gathered.
 Therefore In this project my main goal is to predict if the amount of loan that a person asked based on
 different variable is going to be given.
-These variables are: 
-**ApplicantIncome,CoapplicantIncome,LoanAmount,Credit_History** .
 
-I downloaded from Kaggle a dataset in which there are different features for each person, I used just some of these features.
+To solve this ML problem I'm going to use the Classification technique, that is used to estimate a discrete label function. Of course I'm trying to find an approximation $h$.
+The variables called **features** are: 
+**ApplicantIncome,CoapplicantIncome,LoanAmount,Credit_History**  and the final predicted result is called label or class.
+The first one normally are numerical and the second one categorical. Since I'm trying to find a function that describes my data, having categorycal labels would be a problem, therefore I'm going to convert them in numerical labels.
 
-Every person has in the last column the 'loan Status' which can be either Y or N, labeled as "1" and "0" from me.
+I downloaded from Kaggle a dataset in which there are different features for each person, I used just some of these features, and of course the label in the last column.
+
+Every person has in the last column the 'loan Status' which can be either Y or N, labeled as "1" and "0" from me; converting this categorical values in a possibility of having either 1 or 0 (binary problem).
+
+###LOGISTIC REGRESSION
+
+
+Once the optimal coefficient (or coefficients if there is more than one independent variable) is found, the conditional probabilities for each observation can be calculated, logged, and summed together to yield a predicted probability. For binary classification, a probability less than .5 will predict 0 while a probability greater than 0 will predict 1.
+
 
 Since it's a problem in which you have a Binary outcome(label) and different features I decided to create a **Logistic Regression Model** or **Logit model** to train.
 ```
