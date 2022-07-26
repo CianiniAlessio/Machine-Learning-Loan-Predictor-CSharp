@@ -25,8 +25,14 @@ The beta parameter, or coefficient, in this model is commonly estimated via maxi
 Once the optimal coefficient (or coefficients if there is more than one independent variable) is found, the conditional probabilities for each observation can be calculated, logged, and summed together to yield a predicted probability. For binary classification, a probability less than .5 will predict 0 while a probability greater than 0 will predict 1.
 
 In *Accord* there is a Class called IterativeReweightedLeastSquares class and using its constructor you have to decide if you want to use the Linear Regression or Logistic Regression, that's why I passed the logistic Regression. Also you can decide how many iterations your model has to do before completing the training.
+
 Through the constructor you can see some properties such as: coefficients, weights, standard Error.
-In the method you have to use first the training in which you have to pass 
+
+In the method you have to use first the Learn method, in which you have to pass of course the trainingInputs, then the Decide method in which you pass the testInputs.
+I also calculated the relation between the given input vector and its most strongly associated class using the Score(testInputs) method.
+
+After I tested the model and I save the outputs in a vector it will have 2 results: true and falsewhich will be converted in 1 and 0 respectively.
+Then I compare the prediction with the testOutputs to see the accuracy of my model.
 
 Since it's a problem in which you have a Binary outcome(label) and different features I decided to create a **Logistic Regression Model** or **Logit model** to train.
 ```
@@ -51,18 +57,22 @@ After some step the goal is to minimize the M-norm, this means: $$\min_{\theta_{
 
 After this I pass to the logit model the inputs and the output created before in order to creates some weight to predict a correct label for each testInput, I convert the solution from bool to binary, and then I print the weights.
 ```
- var logit = learner.Learn(traingInputs, traingOutputs);
+                // Train a Logistic Regression model
+                
+                LogisticRegression logit = learner.Learn(traingInputs, traingOutputs);
 
-            // Predict output with true = 1, and false = 0
+                // Predict output 
+                predictions = logit.Decide(testInputs);
 
-            bool[] predictions = logit.Decide(testInputs);
-            int l = 0;
-            
-            Console.Write("The weights of my Model are: ");
-            foreach (var k in logit.Weights)
-            {
-                Console.Write($"{Math.Round(k, 5)}, ");
-            }
+                // Calculate the relation between the given input vector and its most strongly associated class
+                scores = logit.Score(testInputs);
+                
+
+                Console.Write("WEIGHTS: ");
+                foreach (var k in logit.Weights)
+                {
+                    Console.Write($"{Math.Round(k, 5)}, ");
+                }
 ```
 With this part of code I output the results:
 ```
