@@ -16,7 +16,7 @@ Every person has in the last column the 'loan Status' which can be either Y or N
 ### LOGISTIC REGRESSION
 This type of statistical model, known as logit model, is often used for classification and predictive analytics. Logistic regression estimates the probability of an event occurring.
 
-Since the outcome is a probability, the dependent variable is bounded between 0 and 1. In logistic regression, a logit transformation is applied on the odds—that is, the probability of success divided by the probability of failure. This is also commonly known as the log odds, or the natural logarithm of odds, and this logistic function is represented by the following formulas:
+Since the outcome is a probability, the dependent variable is bounded between 0 and 1. In logistic regression, a logit transformation is applied on the odds;that is, the probability of success divided by the probability of failure. This is also commonly known as the log odds, or the natural logarithm of odds, and this logistic function is represented by the following formulas:
 $Logit(y) = \frac{1}{(1+e^{-y})}$ and $ln \left( \frac{y}{1-y} \right )$   = $\beta_0 + \beta_1x_1 +...+\beta_k*x_k$
 
 The beta parameter, or coefficient, in this model is commonly estimated via maximum likelihood estimation (MLE). This method tests different values of beta through multiple iterations to optimize for the best fit of log odds. All of these iterations produce the log likelihood function, and logistic regression seeks to maximize this function to find the best parameter estimate.
