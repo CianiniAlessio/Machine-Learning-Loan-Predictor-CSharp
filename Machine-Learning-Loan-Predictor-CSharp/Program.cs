@@ -13,10 +13,18 @@ using Accord.Statistics.Models.Regression.Fitting;
 
 namespace Machine_Learning_Loan_Predictor_CSharp
 {
-    class Program : utils
+    class Program 
     {
+        
         static void Main(string[] args)
         {
+            string basePath = Directory.GetCurrentDirectory().ToString().Substring(0, Directory.GetCurrentDirectory().ToString().IndexOf("bin") - 1);
+            string pathFinalData = basePath + "\\FinalData";
+            string pathTrainAndTest = basePath + "\\FinalData";
+            string pathDati = basePath + "\\datiC#.csv";
+            string pathCorrette = pathFinalData + "\\CleanedData.csv";
+            string pathTraining = pathTrainAndTest + "\\Training.csv";
+            string pathTest = pathTrainAndTest + "\\Test.csv";
 
 
             Console.WriteLine("\n===========> PROJECT ALESSIO CIANINI <===========\n");
@@ -25,10 +33,10 @@ namespace Machine_Learning_Loan_Predictor_CSharp
 
             // I LOAD THE DATA FROM THE PATH SET IN THE UTILS.CS
 
-            string[,] matriceDati = LoadData(pathDati);
+            string[,] matriceDati = utils.LoadData(pathDati);
 
             //I DECIDE WHICH COLUMN I'M GOING TO USE SINCE NOT ALL THE FEATURES I BELIEVE ARE USEFULL
-            matriceDati = RemoveUselessColumn(matriceDati);
+            matriceDati = utils.RemoveUselessColumn(matriceDati,pathCorrette);
 
             // CHECKING AND CLEANING OF THE MATRIX 
             utils.CheckAndRemoveAnomalies(ref matriceDati);
@@ -39,8 +47,9 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                 MaxIterations = 1000
             };
             //OTHER INITIALIZATION OUTSIDE OF THE CYCLE
+            double[] scores;
             bool[] predictions;
-            int l,i,correctNumber,count = 0;
+            int i,correctNumber,count = 0;
             double accuracy;
             List<double> accuracies = new List<double>();
             Console.WriteLine("========================================================================================");
@@ -48,12 +57,12 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             {                
                 // SPLIT IN TRAINING AND TEST MATRIX, ALSO WRITE TO TEST.CSV AND TRAINING.CSV THE MATRIX CREATED
                 // HERE IS USED ALSO A SHUFFLE ALGORITHM TO CHANGE THE ORDER FOR EACH ITERATIONS
-                u.SplitTrainingTest(matriceDati);
+                MLClass.SplitTrainingTest(matriceDati,pathTest,pathTraining);
 
                 //ONCE I CREATED THE MATRIX I'M GOING GOING TO PREPARE THE DATA FOR THE MODEL, WHICH REQUIRES TO CONVERT THE 
                 //STRING MATRIX IN A DOUBLE MATRIX
-                double[,] miaMatriceTest = LoadDataAndConvertToDouble(pathTest);
-                double[,] miaMatriceTrain = LoadDataAndConvertToDouble(pathTraining);
+                double[,] miaMatriceTest = utils.LoadDataAndConvertToDouble(pathTest);
+                double[,] miaMatriceTrain = utils.LoadDataAndConvertToDouble(pathTraining);
 
                 //INITIALIZATION OF THE VARAIBLES NEEDED
                 double[][] traingInputs = new double[miaMatriceTrain.GetLength(0)][];
@@ -63,19 +72,21 @@ namespace Machine_Learning_Loan_Predictor_CSharp
 
 
                 // I SEPARATE WITH A 80-20 TRAINING-TEST %
-                u.SeparateInputsAndOutputs(ref traingInputs, ref traingOutputs, miaMatriceTrain);
-                u.SeparateInputsAndOutputs(ref testInputs, ref testOutputs, miaMatriceTest);
+                MLClass.SeparateInputsAndOutputs(ref traingInputs, ref traingOutputs, miaMatriceTrain);
+                MLClass.SeparateInputsAndOutputs(ref testInputs, ref testOutputs, miaMatriceTest);
 
 
 
                 // Train a Logistic Regression model
                 
-                var logit = learner.Learn(traingInputs, traingOutputs);
+                LogisticRegression logit = learner.Learn(traingInputs, traingOutputs);
 
-                // Predict output
-
+                // Predict output 
                 predictions = logit.Decide(testInputs);
-                l = 0;
+
+                // Calculate the relation between the given input vector and its most strongly associated class
+                scores = logit.Score(testInputs);
+                
 
                 Console.Write("WEIGHTS: ");
                 foreach (var k in logit.Weights)
@@ -87,15 +98,14 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                 i = 0;
                 correctNumber = 0;
                 Console.Write("\nREGRESSION COEFFICIENT: ");
-                foreach (var coeff in logit.Linear.Coefficients)
+                foreach (var coeff in logit.Linear.Weights)
                 {
                     Console.Write($"{coeff} ");
                 }
                 Console.WriteLine($"\nSTANDARD ERROR: {logit.StandardErrors.Mean()}");
-
-                foreach (var k in testOutputs)
+                foreach ( var res in predictions.ToZeroOne())
                 {
-                    if (k == predictions[i].ToZeroOne())
+                    if(res == testOutputs[i])
                     {
                         correctNumber++;
                     }

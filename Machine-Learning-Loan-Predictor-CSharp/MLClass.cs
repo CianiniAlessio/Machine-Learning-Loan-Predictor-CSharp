@@ -121,7 +121,6 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                 {
                     file.WriteLine("ApplicantIncome,CoapplicantIncome,LoanAmount,Credit_History,Loan_Status");
                     string toWrite = "";
-                    int i = 0;
                     for (int k = 0; k < matriceDati.GetLength(0); k++)
                     {
                         for (int j = 0; j < matriceDati.GetLength(1) - 1; j++)
