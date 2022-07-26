@@ -52,7 +52,7 @@ N-R method:
 $$x_1 = x_0 -\frac{f_{x_0}}{f^1_{x_0}}$$
 Defining the Hessian matrix H after some calculation which are easy to find on the internet we obtain that $$H(\theta,\hat{y}) = Y^TM(\theta,\hat{y})Y$$ where $$M(\theta,\hat{y}) := diag\text{  }{\sigma(\theta^T\hat{y}(1))(1-\sigma(\theta^T\hat{y}(1))}),...,\sigma(\theta^T\hat{y}(N))(1-\sigma(\theta^T\hat{y}(N))$$.
 Then the N-R algorithm can be written as : $$\theta_{m+1} = \theta_m-H^{-1}(\theta_m,\hat(y))\nabla_\theta l(\theta_m;\hat{x},\hat{y})$$
-After some step the goal is to minimize the M-norm, this means: $$\min_{\theta_{m+1}}=||Y\theta_{k+1} - z_k||^2_{M(\theta_k,\hat{y})}$$ with $$z_m = Y\theta_m -M(\theta_m,\hat{y})^{-1}(x-\hat{p}(\theta_k,y)$$
+After some step the goal is to minimize the M-norm, this means: $$\min_{\theta_{m+1}}=||Y\theta_{m+1} - z_m||^2_{M(\theta_m,\hat{y})}$$ with $$z_m = Y\theta_m -M(\theta_m,\hat{y})^{-1}(x-\hat{p}(\theta_m,y)$$
 
 
 After this I pass to the logit model the inputs and the output created before in order to creates some weight to predict a correct label for each testInput, I convert the solution from bool to binary, and then I print the weights.
