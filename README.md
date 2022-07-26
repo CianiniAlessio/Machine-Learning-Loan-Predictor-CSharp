@@ -24,6 +24,8 @@ The beta parameter, or coefficient, in this model is commonly estimated via maxi
 
 Once the optimal coefficient (or coefficients if there is more than one independent variable) is found, the conditional probabilities for each observation can be calculated, logged, and summed together to yield a predicted probability. For binary classification, a probability less than .5 will predict 0 while a probability greater than 0.5 will predict 1.
 
+### ACCORD LIBRARY
+
 In *Accord* there is a Class called IterativeReweightedLeastSquares class and using its constructor you have to decide if you want to use the Linear Regression or Logistic Regression, that's why I passed the logistic Regression. Also you can decide how many iterations your model has to do before completing the training.
 
 Through the constructor you can see some properties such as: coefficients, weights, standard Error.
