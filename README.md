@@ -22,7 +22,7 @@ $Logit(y) = \frac{1}{(1+e^{-y})}$ and $ln \left( \frac{y}{1-y} \right )$   = $\b
 The beta parameter, or coefficient, in this model is commonly estimated via maximum likelihood estimation (MLE). This method tests different values of beta through multiple iterations to optimize for the best fit of log odds. All of these iterations produce the log likelihood function, and logistic regression seeks to maximize this function to find the best parameter estimate.
 
 
-Once the optimal coefficient (or coefficients if there is more than one independent variable) is found, the conditional probabilities for each observation can be calculated, logged, and summed together to yield a predicted probability. For binary classification, a probability less than .5 will predict 0 while a probability greater than 0 will predict 1.
+Once the optimal coefficient (or coefficients if there is more than one independent variable) is found, the conditional probabilities for each observation can be calculated, logged, and summed together to yield a predicted probability. For binary classification, a probability less than .5 will predict 0 while a probability greater than 0.5 will predict 1.
 
 In *Accord* there is a Class called IterativeReweightedLeastSquares class and using its constructor you have to decide if you want to use the Linear Regression or Logistic Regression, that's why I passed the logistic Regression. Also you can decide how many iterations your model has to do before completing the training.
 
