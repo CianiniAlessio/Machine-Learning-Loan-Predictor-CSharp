@@ -17,7 +17,7 @@ Every person has in the last column the 'loan Status' which can be either Y or N
 This type of statistical model, known as logit model, is often used for classification and predictive analytics. Logistic regression estimates the probability of an event occurring.
 
 Since the outcome is a probability, the dependent variable is bounded between 0 and 1. In logistic regression, a logit transformation is applied on the odds—that is, the probability of success divided by the probability of failure. This is also commonly known as the log odds, or the natural logarithm of odds, and this logistic function is represented by the following formulas:
-$Logit(x) = \frac{1}{(1+e^{-x})}$ yielding $ln \right( \frac{x}{1-x} \left )$ $ = \beta_p+\beta_1*x_1+...+ \beta_k*x_k$
+$Logit(x) = \frac{1}{(1+e^{-x})}$ yielding $ln \left( \frac{x}{1-x} \right )$ $ = \beta_p+\beta_1*x_1+...+ \beta_k*x_k$
 
 
 Once the optimal coefficient (or coefficients if there is more than one independent variable) is found, the conditional probabilities for each observation can be calculated, logged, and summed together to yield a predicted probability. For binary classification, a probability less than .5 will predict 0 while a probability greater than 0 will predict 1.
