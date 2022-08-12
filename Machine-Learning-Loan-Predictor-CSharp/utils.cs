@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Machine_Learning_Loan_Predictor_CSharp
+﻿namespace Machine_Learning_Loan_Predictor_CSharp
 {
     class utils
     {
@@ -56,6 +50,43 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             string[,] newArray = new string[matriceDati.GetLength(0) - errori.Count, matriceDati.GetLength(1)];
             int[] PosErrori = errori.ToArray();
 
+#if true // if it doesn't work for some reasons just put false instead of true so I use the other iteration cycle which is slower but surely correct
+            int lastRowChecked = 0;
+
+            // I iterate through all the errors
+            for (int z = 0; z < errori.Count; z++)
+            {
+                // then i iterate through the matrix to check if the position of the error is the same as the position of the matrix in which i'm at
+                for (int k = lastRowChecked ; k < row; k++)
+                {
+                    // this is the check
+                    if (PosErrori[z] != k)
+                    {
+                        // if it's different then it's not an error and I just insert the data
+                        for (int j = 0; j < column; j++)
+                        {   
+                            // the row that I'm going to fill is going to be the row in which I'm at minus the number of error counted.
+                            // Basically I need to scale the position of the array with the errors minus
+                            // the number of error encountered in order to not have empty spaces in the cleaned array.
+                            newArray[k - (numberOfCurrentErrors), j] = matriceDati[k, j];
+                        }
+                          
+                    }
+                    // if it's equal i need to do some things such as: count the number of error encountered so I can manage the insertion in the
+                    // previous cycle and remove the number of error in order for the matrix to not have any empty rows
+                    // i also keep track of the row in which i last do the check to start the k-cycle from the last checked to save time
+                    else
+                    {
+                        numberOfCurrentErrors++ ;
+                        lastRowChecked = k + 1;
+                        break;
+                    } 
+                }
+            }
+            matriceDati = newArray;
+        }
+#else
+
             bool checkPos;
             for (int k = 0; k < row; k++)
             {
@@ -86,6 +117,7 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             }
             matriceDati = newArray;
         }
+#endif
 
         /// <summary>
         /// Read the data from the csv and create a matrix which I'm going to check for malformed data ex: null char, negative salary ecc

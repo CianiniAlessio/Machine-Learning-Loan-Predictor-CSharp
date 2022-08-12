@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Machine_Learning_Loan_Predictor_CSharp
 {
     class MLClass
@@ -18,7 +13,6 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             {
                 double[] d = new double[4] { matrix[i, 0], matrix[i, 1], matrix[i, 2], matrix[i, 3] };
                 Inputs[i] = d;
-
                 Outputs[i] = matrix[i, 4];
 
             }

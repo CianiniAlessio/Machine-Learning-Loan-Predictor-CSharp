@@ -53,7 +53,7 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             double accuracy;
             List<double> accuracies = new List<double>();
             Console.WriteLine("========================================================================================");
-            while (count++<30)
+            while (count++<5)
             {                
                 // SPLIT IN TRAINING AND TEST MATRIX, ALSO WRITE TO TEST.CSV AND TRAINING.CSV THE MATRIX CREATED
                 // HERE IS USED ALSO A SHUFFLE ALGORITHM TO CHANGE THE ORDER FOR EACH ITERATIONS
@@ -115,7 +115,7 @@ namespace Machine_Learning_Loan_Predictor_CSharp
                 accuracies.Add(accuracy);
                 Console.WriteLine($"ACCURACY = {accuracy}%");
                 Console.WriteLine("========================================================================================");
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
             }
             Console.WriteLine("THE ACCURACIES FOR EACH CYCLE ARE:");
             foreach(var x in accuracies)
