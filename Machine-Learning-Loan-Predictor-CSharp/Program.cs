@@ -18,6 +18,9 @@ namespace Machine_Learning_Loan_Predictor_CSharp
         
         static void Main(string[] args)
         {
+
+
+#if true    // IN CASE THIS DOESN'T WORK JUST WRITE FALSE INSTEAD OF TRUE
             string basePath = Directory.GetCurrentDirectory().ToString().Substring(0, Directory.GetCurrentDirectory().ToString().IndexOf("bin") - 1);
             string pathFinalData = basePath + "\\FinalData";
             string pathTrainAndTest = basePath + "\\FinalData";
@@ -25,7 +28,21 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             string pathCorrette = pathFinalData + "\\CleanedData.csv";
             string pathTraining = pathTrainAndTest + "\\Training.csv";
             string pathTest = pathTrainAndTest + "\\Test.csv";
+            
+#else
+            //FOLDER'S PATH, CHANGE THE THREE BASE PATH, FOR THE FINAL DATA AND TRAIN AND TEST I CHOSE TO WRITE THEM IN A FOLDER CALLED FINAL DATA, JUST TO BE MORE ORGANIZED
 
+            string basePath = "C:\\Users\\Administrator\\Source\\Repos\\CianiniAlessio\\Machine-Learning-Loan-Predictor-CSharp\\Machine-Learning-Loan-Predictor-CSharp";
+            string pathFinalData = "C:\\Users\\Administrator\\Source\\Repos\\CianiniAlessio\\Machine-Learning-Loan-Predictor-CSharp\\Machine-Learning-Loan-Predictor-CSharp\\FinalData";
+            string pathTrainAndTest = "C:\\Users\\Administrator\\Source\\Repos\\CianiniAlessio\\Machine-Learning-Loan-Predictor-CSharp\\Machine-Learning-Loan-Predictor-CSharp\\FinalData";
+
+            //FILE'S PATH                                                                                                                                                         
+
+            string pathDati = basePath + "\\datiC#.csv";
+            string pathCorrette = pathFinalData + "\\CleanedData.csv";
+            string pathTraining = pathTrainAndTest + "\\Training.csv";
+            string pathTest = pathTrainAndTest + "\\Test.csv";
+#endif
 
             Console.WriteLine("\n===========> PROJECT ALESSIO CIANINI <===========\n");
             Console.WriteLine("\n===========> Creating a model and training it <===========\n");
@@ -52,7 +69,9 @@ namespace Machine_Learning_Loan_Predictor_CSharp
             int i,correctNumber,count = 0;
             double accuracy;
             List<double> accuracies = new List<double>();
+
             Console.WriteLine("========================================================================================");
+
             while (count++<5)
             {                
                 // SPLIT IN TRAINING AND TEST MATRIX, ALSO WRITE TO TEST.CSV AND TRAINING.CSV THE MATRIX CREATED
